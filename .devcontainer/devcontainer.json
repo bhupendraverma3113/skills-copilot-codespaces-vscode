@@ -1,0 +1,10 @@
+{
+  "name": "Bhupendra Code-space for skills",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "GitHub.copilot"
+      ]
+    }
+  }
+}
