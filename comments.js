@@ -1,11 +1,14 @@
-// create web server in c#
-// create web server in node.js
-// create web server in java
-// create web server in python
-// create web server in php
-// create web server in ruby
-// create web server in c++
-// create web server in go
-// create web server in swift
-// create web server in rust
-// create web server in kotlin
+// create web server
+// create a web server with express
+const express = require("express");
+const app = express();
+
+// add a route to the web server
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+// start the server
+app.listen(3000, () => {
+  console.log("Server started on http://localhost:3000");
+});
