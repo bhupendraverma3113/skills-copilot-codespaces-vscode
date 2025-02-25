@@ -1,35 +1,36 @@
-// create a web server with node.js
+// Create web server and listen to port 3000
+// Define routes
+// Define a route for /comments
+// Define a route for POST /comments
+// Define a route for /comments/:id
+// Define a route for PUT /comments/:id
+// Define a route for DELETE /comments/:id
 
-var http = require("http");
-var fs = require("fs");
-var qs = require("querystring");
-var url = require("url");
+// Required modules
+var http = require('http');
+var url = require('url');
+var comments = require('./comments');
 
+// Create web server
 var server = http.createServer(function (req, res) {
-  if (req.method === "POST") {
-    var body = "";
-    req.on("data", function (data) {
-      body += data;
-    });
+  // Parse request URL
+  var urlParts = url.parse(req.url);
 
-    req.on("end", function () {
-      var POST = qs.parse(body);
-      fs.readFile("comments.json", function (err, comments) {
-        comments = JSON.parse(comments);
-        comments.push(POST);
-        fs.writeFile("comments.json", JSON.stringify(comments), function (err) {
-          res.writeHead(200, { "Content-Type": "text/plain" });
-          res.end("Thanks for the comment!");
-        });
-      });
-    });
+  // Define routes
+  if (urlParts.pathname === '/comments' && req.method === 'GET') {
+    comments.read(req, res);
+  } else if (urlParts.pathname === '/comments' && req.method === 'POST') {
+    comments.create(req, res);
+  } else if (urlParts.pathname === '/comments' && req.method === 'PUT') {
+    comments.update(req, res);
+  } else if (urlParts.pathname === '/comments' && req.method === 'DELETE') {
+    comments.delete(req, res);
   } else {
-    fs.readFile("comments.json", function (err, comments) {
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(comments);
-    });
+    res.writeHead(404, {'Content-Type': 'text/plain'});
+    res.end('Not Found\n');
   }
 });
 
+// Listen to port 3000
 server.listen(3000);
-console.log("Server running on port 3000");
+console.log('Server running at http://localhost:3000/');
